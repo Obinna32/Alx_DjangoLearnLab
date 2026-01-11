@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "bookshelf",
 ]
 
 MIDDLEWARE = [
@@ -75,7 +76,11 @@ WSGI_APPLICATION = "LibraryProject.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": "alx_be_django_intro_assignment",
+        "USER": "root",
+        "PASSWORD": "password12345,.",
+        "HOST": "localhost",
+        "PORT": "3306",
     }
 }
 
