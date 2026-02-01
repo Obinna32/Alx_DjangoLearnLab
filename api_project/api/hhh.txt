@@ -1,0 +1,39 @@
+curl -X POST -d "username=Obinna32&password=password12345,." http://127.0.0.1:8000/api/api-token-auth/
+
+
+Step 4: Test Authentication
+Create a User:
+You need a user to generate a token for. Run:
+code
+Bash
+python manage.py createsuperuser
+(Follow the prompts to set a username and password).
+Obtain a Token:
+Use curl or Postman to send a POST request to http://127.0.0.1:8000/api/api-token-auth/ with your credentials:
+code
+Bash
+curl -X POST -d "username=YOUR_USER&password=YOUR_PASSWORD" http://127.0.0.1:8000/api/api-token-auth/
+You will receive a response like: {"token": "9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b"}.
+Access Secured Data:
+Try to GET the books without a token—it should fail (401 Unauthorized).
+Then, try with the token in the header:
+code
+Bash
+curl -H "Authorization: Token YOUR_TOKEN_VALUE" http://127.0.0.1:8000/api/books/
+
+{"token":"a185c9666d86ae974dff6bacd7eafd99dec4d6ac"}
+
+
+o fix this, follow these steps:
+1. Start the Server
+Open a new terminal window (or use the one you were using), ensure you are in the directory where manage.py is located, and run:
+code
+Bash
+python manage.py runserver
+Keep this terminal open. You should see output that says:
+Starting development server at http://127.0.0.1:8000/
+2. Run the curl command again
+While the server is running in that first terminal, open a second terminal window to run your curl command:
+code
+Bash
+curl -X POST -d "username=Obinna32&password=password12345,." http://127.0.0.1:8000/api/api-token-auth/
