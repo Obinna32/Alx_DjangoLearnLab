@@ -1,0 +1,26 @@
+C:\Users\HP\Desktop\ALX\SE\Alx_DjangoLearnLab\advanced-api-project>python manage.py shell
+8 objects imported automatically (use -v 2 for details).
+
+Python 3.13.7 (tags/v3.13.7:bcee1c3, Aug 14 2025, 14:15:11) [MSC v.1944 64 bit (AMD64)]
+Type 'copyright', 'credits' or 'license' for more information
+IPython 9.5.0 -- An enhanced Interactive Python. Type '?' for help.
+Tip: You can use `%hist` to view history, see the options with `%history?`
+
+In [1]: from api.models import Author, Book
+
+In [2]: from api.serializers import AuthorSerializer, BookSerializer
+
+In [3]: author = Author.objects.create(name="Chinua Achebe")
+
+In [4]: Book.objects.create(title="Things Fall Apart", publication_year=1958, author=author)
+Out[4]: <Book: Things Fall Apart>
+
+In [5]: Book.objects.create(title="Arrow Of God", publication_year=1964, author=author)
+Out[5]: <Book: Arrow Of God>
+
+In [6]: serializer = AuthorSerializer(author)
+
+In [7]: print(serializer.data)
+{'name': 'Chinua Achebe', 'books': [{'title': 'Things Fall Apart', 'publication_year': 1958, 'author': 1}, {'title': 'Arrow Of God', 'publication_year': 1964, 'author': 1}]}
+
+In [8]: 

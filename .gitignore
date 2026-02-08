@@ -1,0 +1,20 @@
+# Ignore all SQLite databases in any folder
+**/db.sqlite3
+**/db.sqlite3-journal
+
+# Ignore all virtual environments in any folder
+**/venv/
+**/env/
+**/ENV/
+
+# Ignore all Python cache folders
+**/__pycache__/
+**/*.py[cod]
+
+# Ignore sensitive settings
+**/local_settings.py
+
+# Ignore media and logs
+**/media/
+**/logs/
+*.log
