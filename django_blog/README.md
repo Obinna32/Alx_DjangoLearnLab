@@ -35,3 +35,25 @@ A comprehensive blogging platform built with Django that supports user authentic
    ```bash
    git clone https://github.com/Obinna32/Alx_DjangoLearnLab.git
    cd Alx_DjangoLearnLab/django_blog
+
+2. Set up a virtual environment and install dependencies:
+code
+```bash
+python -m venv venv
+source venv/Scripts/activate  # On Windows
+pip install django pymysql
+```
+
+3. Database Configuration:
+Update django_blog/settings.py with your MySQL credentials. Ensure you have created a database named django_blog in MySQL.
+Apply migrations:
+code
+```Bash
+python manage.py makemigrations
+python manage.py migrate
+```
+Run the development server:
+code
+```Bash
+python manage.py runserver
+```
