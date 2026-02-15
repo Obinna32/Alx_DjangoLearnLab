@@ -4,9 +4,9 @@ from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, CommentForm
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .models import Post, Profile, Comment
+from .models import Post, Profile, Comment, Tag
 from django.urls import reverse_lazy, reverse
-
+from django.db.models import Q
 
 # Create your views here.
 def register(request):
@@ -136,3 +136,24 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         # Redirect back to the post detail page after posting
         return reverse_lazy('post-detail', kwargs={'pk': self.kwargs['pk']})
+    
+def search_posts(request):
+    query = request.GET.get('q')
+    if query:
+        posts = Post.objects.filter(
+            Q(title__icontains=query) | 
+            Q(content__icontains=query) | 
+            Q(tags__name__icontains=query)
+        ).distinct()
+    else:
+        posts = Post.objects.none()
+    return render(request, 'blog/search_results.html', {'posts': posts, 'query': query})
+
+class PostByTagListView(ListView):
+    model = Post
+    template_name = 'blog/post_list.html'
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        tag_name = self.kwargs.get('tag_name')
+        return Post.objects.filter(tags__name__iexact=tag_name).order_by('-published_date')

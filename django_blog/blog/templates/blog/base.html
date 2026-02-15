@@ -7,6 +7,13 @@
         <link rel="stylesheet" href="{% static 'blog/css/style.css' %}">
     </head>
     <body>
+        <nav>
+            <a href="{% url 'blog-home' %}">Home</a>
+            <form action="{% url 'search-posts' %}" method="GET" style="display:inline;">
+                <input type="text" name="q" placeholder="Search posts...">
+                <button type="submit">Search</button>
+            </form>
+        </nav>
         <header>
             <h1>Welcome to the Blog</h1>
         </header>
