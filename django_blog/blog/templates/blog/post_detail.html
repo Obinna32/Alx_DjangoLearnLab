@@ -1,45 +1,78 @@
 {% extends "blog/base.html" %}
+
 {% block content %}
-    <article>
+<!-- Post Content Section -->
+<article class="post-detail">
+    <div class="post-header">
         <h1>{{ object.title }}</h1>
-        <p>By {{ object.author }} on {{ object.published_date }}</p>
-        <div>{{ object.content }}</div>
-        
-        {% if object.author == user %}
-            <a href="{% url 'post-update' object.id %}">Edit Post</a>
-            <a href="{% url 'post-delete' object.id %}">Delete Post</a>
-        {% endif %}
-    </article>
+        <p class="text-muted">
+            By <strong>{{ object.author.username }}</strong> on {{ object.published_date|date:"F d, Y" }}
+        </p>
+    </div>
 
-    <hr>
+    <div class="post-content">
+        <p>{{ object.content|linebreaks }}</p>
+    </div>
 
-    <h3>Comments ({{ comments.count }})</h3>
+    <!-- Post Action Buttons (Only for the Author) -->
+    {% if object.author == user %}
+    <div class="post-actions">
+        <a href="{% url 'post-update' object.id %}" class="btn btn-secondary">Edit Post</a>
+        <a href="{% url 'post-delete' object.id %}" class="btn btn-danger">Delete Post</a>
+    </div>
+    {% endif %}
+</article>
+
+<hr>
+
+<!-- Comments Section -->
+<section class="comments">
+    <h3>Comments</h3>
+
+    <!-- Link to Add Comment (Required by the CommentCreateView task) -->
     {% if user.is_authenticated %}
-        <div class="comment-form">
-            <h4>Leave a comment:</h4>
-            <form method="POST" action="{% url 'add-comment' object.pk %}">
-                {% csrf_token %}
-                {{ comment_form.as_p }}
-                <button type="submit">Submit Comment</button>
-            </form>
+        <div class="mb-4">
+            <a href="{% url 'add-comment' object.id %}" class="btn btn-primary">Add a Comment</a>
         </div>
     {% else %}
-        <p>Please <a href="{% url 'login' %}">log in</a> to leave a comment.</p>
+        <p><a href="{% url 'login' %}">Log in</a> to leave a comment.</p>
     {% endif %}
 
-    <div class="comments-section">
-        {% for comment in comments %}
-            <div class="comment">
-                <p><strong>{{ comment.author.username }}</strong> commented on {{ comment.created_at|date:"F d, Y" }} at {{ comment.created_at|time:"H:i" }}</p>
+    <div class="comment-list">
+        {% for comment in object.comments.all %}
+            <div class="comment-item" style="border-bottom: 1px solid #ccc; padding: 10px 0;">
+                <p>
+                    <strong>{{ comment.author.username }}</strong> 
+                    <small class="text-muted">{{ comment.created_at|date:"M d, Y H:i" }}</small>
+                </p>
                 <p>{{ comment.content }}</p>
+
+                <!-- Comment Action Buttons (Only for the Comment Author) -->
                 {% if comment.author == user %}
-                    <a href="{% url 'comment-update' comment.pk %}">Edit</a> |
-                    <a href="{% url 'comment-delete' comment.pk %}">Delete</a>
+                    <div class="comment-actions">
+                        <a href="{% url 'comment-update' comment.id %}" class="btn-sm btn-info">Edit</a>
+                        <a href="{% url 'comment-delete' comment.id %}" class="btn-sm btn-danger">Delete</a>
+                    </div>
                 {% endif %}
             </div>
-            <hr>
         {% empty %}
-            <p>No comments yet. Be the first to comment!</p>
+            <p>No comments yet. Be the first to share your thoughts!</p>
         {% endfor %}
     </div>
+</section>
+
+<!-- Simple internal CSS to make things look clean -->
+<style>
+    .post-detail { margin-bottom: 40px; }
+    .post-header { border-bottom: 2px solid #333; margin-bottom: 20px; }
+    .post-content { font-size: 1.2em; line-height: 1.6; }
+    .post-actions, .comment-actions { margin-top: 15px; }
+    .btn { padding: 8px 15px; text-decoration: none; display: inline-block; border-radius: 4px; }
+    .btn-primary { background-color: #007bff; color: white; }
+    .btn-secondary { background-color: #6c757d; color: white; }
+    .btn-danger { background-color: #dc3545; color: white; }
+    .btn-info { background-color: #17a2b8; color: white; font-size: 0.8em; }
+    .btn-sm { padding: 4px 8px; }
+    .mb-4 { margin-bottom: 1.5rem; }
+</style>
 {% endblock %}
