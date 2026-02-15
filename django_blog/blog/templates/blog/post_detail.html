@@ -6,8 +6,40 @@
         <div>{{ object.content }}</div>
         
         {% if object.author == user %}
-            <a href="{% url 'post-update' object.id %}">Edit</a>
-            <a href="{% url 'post-delete' object.id %}">Delete</a>
+            <a href="{% url 'post-update' object.id %}">Edit Post</a>
+            <a href="{% url 'post-delete' object.id %}">Delete Post</a>
         {% endif %}
     </article>
+
+    <hr>
+
+    <h3>Comments ({{ comments.count }})</h3>
+    {% if user.is_authenticated %}
+        <div class="comment-form">
+            <h4>Leave a comment:</h4>
+            <form method="POST" action="{% url 'add-comment' object.pk %}">
+                {% csrf_token %}
+                {{ comment_form.as_p }}
+                <button type="submit">Submit Comment</button>
+            </form>
+        </div>
+    {% else %}
+        <p>Please <a href="{% url 'login' %}">log in</a> to leave a comment.</p>
+    {% endif %}
+
+    <div class="comments-section">
+        {% for comment in comments %}
+            <div class="comment">
+                <p><strong>{{ comment.author.username }}</strong> commented on {{ comment.created_at|date:"F d, Y" }} at {{ comment.created_at|time:"H:i" }}</p>
+                <p>{{ comment.content }}</p>
+                {% if comment.author == user %}
+                    <a href="{% url 'comment-update' comment.pk %}">Edit</a> |
+                    <a href="{% url 'comment-delete' comment.pk %}">Delete</a>
+                {% endif %}
+            </div>
+            <hr>
+        {% empty %}
+            <p>No comments yet. Be the first to comment!</p>
+        {% endfor %}
+    </div>
 {% endblock %}
