@@ -6,7 +6,7 @@ from .views import CommentCreateView, PostListView, PostDetailView, PostCreateVi
 urlpatterns = [
     path('', PostListView.as_view(), name='blog-home'),
     path('search/', search_posts, name='search-posts'),
-    path('tags/<str:tag_name>/', PostByTagListView.as_view(), name='posts-by-tag'),
+    path('tags/<slug:tag_slug>/', PostByTagListView.as_view(), name='posts-by-tag'),
     path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
     path('post/new/', PostCreateView.as_view(), name='post-create'),
     path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post-update'),

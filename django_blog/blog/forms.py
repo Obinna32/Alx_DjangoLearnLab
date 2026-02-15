@@ -1,5 +1,5 @@
 from django import forms
-from .models import Profile, Post, Comment, Tag
+from .models import Profile, Post, Comment
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
@@ -23,16 +23,9 @@ class ProfileUpdateForm(forms.ModelForm):
         fields = ['bio', 'profile_picture']
 
 class PostForm(forms.ModelForm):
-    tags = forms.ModelMultipleChoiceField(
-        queryset=Tag.objects.all(),
-        widget=forms.CheckboxSelectMultiple,
-        required=False
-    )
-
     class Meta:
         model = Post
         fields = ['title', 'content', 'tags']
-
     
 class CommentForm(forms.ModelForm):
     class Meta:

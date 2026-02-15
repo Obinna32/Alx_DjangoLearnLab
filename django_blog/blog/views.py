@@ -4,8 +4,9 @@ from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, CommentForm
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .models import Post, Profile, Comment, Tag
+from .models import Post, Profile, Comment
 from django.urls import reverse_lazy, reverse
+from taggit.models import Tag
 from django.db.models import Q
 
 # Create your views here.
@@ -155,5 +156,5 @@ class PostByTagListView(ListView):
     context_object_name = 'posts'
 
     def get_queryset(self):
-        tag_name = self.kwargs.get('tag_name')
-        return Post.objects.filter(tags__name__iexact=tag_name).order_by('-published_date')
+        # Taggit uses slugs or names to filter
+        return Post.objects.filter(tags__name__in=[self.kwargs.get('tag_slug')])
