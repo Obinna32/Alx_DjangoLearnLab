@@ -57,3 +57,18 @@ code
 ```Bash
 python manage.py runserver
 ```
+
+### Comment Functionality
+*   **Post Comments:** Authenticated users can leave comments on any blog post.
+*   **View Comments:** All comments are displayed below the respective blog post.
+*   **Edit Comment:** Only the author of a comment can edit their comment.
+*   **Delete Comment:** Only the author of a comment can delete their comment, with a confirmation step.
+
+## Setup Instructions
+
+... (Existing content) ...
+
+## User Guide
+... (Existing content) ...
+ **Comment:** On any post's detail page, if logged in, you can add a comment. Existing comments will be displayed.
+ **Manage Comments:** If you are the author of a comment, "Edit" and "Delete" links will appear next to your comment.
