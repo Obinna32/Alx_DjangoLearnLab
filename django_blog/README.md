@@ -33,5 +33,5 @@ A comprehensive blogging platform built with Django that supports user authentic
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/YourUsername/Alx_DjangoLearnLab.git
+   git clone https://github.com/Obinna32/Alx_DjangoLearnLab.git
    cd Alx_DjangoLearnLab/django_blog
