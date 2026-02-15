@@ -72,3 +72,13 @@ python manage.py runserver
 ... (Existing content) ...
  **Comment:** On any post's detail page, if logged in, you can add a comment. Existing comments will be displayed.
  **Manage Comments:** If you are the author of a comment, "Edit" and "Delete" links will appear next to your comment.
+
+ ### 4. Advanced Features: Tagging and Search
+*   **Tagging:** Posts can now be categorized with multiple tags. Clicking a tag filters the blog to show only posts with that tag.
+*   **Search:** A search bar in the navigation allows users to find posts by keywords in the title, content, or tag names.
+*   **Complex Queries:** The search uses Django `Q` objects to perform an `OR` search across multiple fields simultaneously.
+
+## How to use:
+1.  **Add Tags:** When creating or editing a post, select tags from the list (Admin can add new Tags in the backend).
+2.  **Filter by Tag:** On any post detail page, click on a tag (e.g., #Python) to see all related posts.
+3.  **Search:** Use the search bar in the header. If you search for "Django", the system will return all posts containing "Django" in the title or content, or tagged with "Django".
