@@ -33,5 +33,6 @@ class FeedView(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        following_users = self.request.user.followimg.all()
+        user = self.request.user
+        following_users = user.followimg.all()
         return Post.objects.filter(author__in=following_users).order_by('-created_at')
